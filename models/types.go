@@ -35,6 +35,7 @@ const (
 	EventLeftClick   MouseEventType = "left_click"
 	EventRightClick  MouseEventType = "right_click"
 	EventDoubleClick MouseEventType = "double_click"
+	EventMove        MouseEventType = "move"
 )
 
 type MouseEvent struct {

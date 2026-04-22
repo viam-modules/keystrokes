@@ -216,6 +216,8 @@ func doMouseEvent(mouseEvent MouseEvent) error {
 		return RightClick(mouseEvent.X, mouseEvent.Y)
 	case EventDoubleClick:
 		return DoubleClick(mouseEvent.X, mouseEvent.Y)
+	case EventMove:
+		return MoveMouse(mouseEvent.X, mouseEvent.Y)
 	}
 	return nil
 }

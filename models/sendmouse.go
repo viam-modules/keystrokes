@@ -38,6 +38,20 @@ func normalizeCoordinates(x, y float64) (dx, dy int32) {
 	return dx, dy
 }
 
+func MoveMouse(x, y float64) error {
+	dx, dy := normalizeCoordinates(x, y)
+
+	i := minput{inputType: flag_MouseInput, mi: mouseInput{dwFlags: flag_Move | flag_AbsolutePosition, dx: dx, dy: dy}}
+	if ret, _, err := sendInputProc.Call(
+		uintptr(1),
+		uintptr(unsafe.Pointer(&i)),
+		uintptr(unsafe.Sizeof(i)),
+	); ret == 0 {
+		return err
+	}
+	return nil
+}
+
 func LeftClick(x, y float64) error {
 	dx, dy := normalizeCoordinates(x, y)
 
