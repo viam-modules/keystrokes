@@ -8,7 +8,7 @@ Currently only works for Windows
 
 Send keystrokes and mouse inputs to your machine.
 You can send sequential keystrokes, or press keys simultaneously. Each keystroke is separated by a 100ms gap.
-You can send left, right, or double left clicks, or move the mouse without clicking.
+You can send left, right, or double left clicks, or move the mouse without clicking. Left/right clicks will move the mouse first (explicit move command not needed).
 
 ## Attributes
 
