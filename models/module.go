@@ -44,6 +44,7 @@ type keystrokesKeypresser struct {
 	cancelCtx  context.Context
 	cancelFunc func()
 
+	resource.Named
 	resource.TriviallyCloseable
 }
 
@@ -84,10 +85,6 @@ func newKeystrokesKeypresser(ctx context.Context, deps resource.Dependencies, ra
 		cancelFunc: cancelFunc,
 	}
 	return s, nil
-}
-
-func (s *keystrokesKeypresser) Name() resource.Name {
-	return s.name
 }
 
 func (s *keystrokesKeypresser) Reconfigure(ctx context.Context, deps resource.Dependencies, conf resource.Config) error {
@@ -216,6 +213,8 @@ func doMouseEvent(mouseEvent MouseEvent) error {
 		return RightClick(mouseEvent.X, mouseEvent.Y)
 	case EventDoubleClick:
 		return DoubleClick(mouseEvent.X, mouseEvent.Y)
+	case EventMove:
+		return MoveMouse(mouseEvent.X, mouseEvent.Y)
 	}
 	return nil
 }
