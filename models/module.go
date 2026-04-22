@@ -222,6 +222,10 @@ func doMouseEvent(mouseEvent MouseEvent) error {
 	return nil
 }
 
+func (s *keystrokesKeypresser) Status(ctx context.Context) (map[string]interface{}, error) {
+	return map[string]interface{}{}, nil
+}
+
 func doSleep(sleep Sleep) {
 	time.Sleep(time.Duration(sleep.Ms) * time.Millisecond)
 }
