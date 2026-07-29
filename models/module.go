@@ -35,7 +35,7 @@ type Config struct {
 }
 
 type keystrokesKeypresser struct {
-	name resource.Name
+	resource.Named
 
 	logger logging.Logger
 	cfg    *Config
@@ -43,9 +43,6 @@ type keystrokesKeypresser struct {
 
 	cancelCtx  context.Context
 	cancelFunc func()
-
-	resource.Named
-	resource.TriviallyCloseable
 }
 
 func getMacrosFromAttrs(attrs utils.AttributeMap) (Macros, error) {
@@ -77,7 +74,7 @@ func newKeystrokesKeypresser(ctx context.Context, deps resource.Dependencies, ra
 	cancelCtx, cancelFunc := context.WithCancel(context.Background())
 
 	s := &keystrokesKeypresser{
-		name:       rawConf.ResourceName(),
+		Named:      rawConf.ResourceName().AsNamed(),
 		logger:     logger,
 		cfg:        conf,
 		macros:     macros,
@@ -85,6 +82,11 @@ func newKeystrokesKeypresser(ctx context.Context, deps resource.Dependencies, ra
 		cancelFunc: cancelFunc,
 	}
 	return s, nil
+}
+
+func (s *keystrokesKeypresser) Close(ctx context.Context) error {
+	s.cancelFunc()
+	return nil
 }
 
 func (s *keystrokesKeypresser) Reconfigure(ctx context.Context, deps resource.Dependencies, conf resource.Config) error {
