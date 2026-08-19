@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	Keypresser = resource.NewModel("viam-modules", "keystrokes", "keypresser")
+	Keypresser = resource.NewModel("viam", "keystrokes", "keypresser")
 )
 
 func init() {
