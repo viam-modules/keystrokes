@@ -1,13 +1,13 @@
 {
   "$schema": "https://dl.viam.dev/module.schema.json",
-  "module_id": "njooma:keystrokes",
+  "module_id": "viam:keystrokes",
   "visibility": "public_unlisted",
-  "url": "https://github.com/njooma/keystrokes",
+  "url": "https://github.com/viam-modules/keystrokes",
   "description": "Send key and mouse inputs to Windows machines",
   "models": [
     {
       "api": "rdk:component:generic",
-      "model": "njooma:keystrokes:keypresser"
+      "model": "viam:keystrokes:keypresser"
     }
   ],
   "entrypoint": "keystrokes.exe",
