@@ -3,7 +3,7 @@ module keystrokes
 go 1.26.0
 
 require (
-	go.viam.com/rdk v1.5.0
+	go.viam.com/rdk v1.6.0
 	golang.org/x/sys v0.47.0
 )
 
