@@ -138,12 +138,12 @@ func handleEvents(commands []Command, macros Macros) error {
 		case Type_Sleep:
 			doSleep(event.Sleep)
 		case Type_Macro:
-			if macro, ok := macros[event.Macro.Name]; ok {
+			if macro, ok := macros[event.Name]; ok {
 				if err := handleEvents(macro, macros); err != nil {
 					return err
 				}
 			} else {
-				return fmt.Errorf("unknown macro: %s", event.Macro.Name)
+				return fmt.Errorf("unknown macro: %s", event.Name)
 			}
 		default:
 			return fmt.Errorf("unknown event type: %s", event.Type)
@@ -153,7 +153,8 @@ func handleEvents(commands []Command, macros Macros) error {
 }
 
 func doKeystroke(keystroke Keystroke) error {
-	if keystroke.Mode == Simultaneous {
+	switch keystroke.Mode {
+	case Simultaneous:
 		pressed := []int{}
 		for _, keys := range keystroke.Keys {
 			// Check if meta key and press/release immediately
@@ -179,7 +180,7 @@ func doKeystroke(keystroke Keystroke) error {
 				return err
 			}
 		}
-	} else if keystroke.Mode == Sequential {
+	case Sequential:
 		for _, keys := range keystroke.Keys {
 			// Check if meta key and press/release immediately
 			// Otherwise, go rune by rune

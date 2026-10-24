@@ -17,8 +17,11 @@ var (
 	queryToken       = wts32.NewProc("WTSQueryUserToken")
 )
 
+// contextKey keeps Flag_InChild from colliding with context values set by other packages.
+type contextKey string
+
 const (
-	Flag_InChild = "child"
+	Flag_InChild contextKey = "child"
 )
 
 func activeUserToken() (windows.Token, error) {
@@ -53,7 +56,7 @@ func SpawnSelf(cmdArgs string) error {
 	if err != nil {
 		return err
 	}
-	defer token.Close()
+	defer func() { _ = token.Close() }()
 	// todo: why do some docs recommend this here?
 	// var token windows.Token
 	// err = windows.DuplicateTokenEx(origToken, windows.MAXIMUM_ALLOWED, nil, windows.SecurityImpersonation, windows.TokenPrimary, &token)
@@ -86,8 +89,8 @@ func SpawnSelf(cmdArgs string) error {
 	if err != nil {
 		return fmt.Errorf("CreateProcessAsUser failed: %v", err)
 	}
-	defer windows.CloseHandle(pi.Process)
-	defer windows.CloseHandle(pi.Thread)
+	defer func() { _ = windows.CloseHandle(pi.Process) }()
+	defer func() { _ = windows.CloseHandle(pi.Thread) }()
 	_, err = windows.WaitForSingleObject(pi.Process, windows.INFINITE)
 	// todo: do something useful with error code from subproc. currently we're not detecting failure.
 	return err
