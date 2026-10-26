@@ -76,7 +76,7 @@ func Release(key int) error {
 	key, needsShift := keyWithShift(key)
 	if needsShift {
 		defer func() {
-			keyUp(keymap["VK_SHIFT"])
+			_ = keyUp(keymap["VK_SHIFT"])
 		}()
 	}
 	if err := keyUp(key); err != nil {
