@@ -40,6 +40,7 @@ jobs:
           git diff --exit-code -- go.mod go.sum
 
   # The module has no tests; this cross-compiles it the way the Makefile does.
+  # no_cgo: cross-compiling disables cgo, and rdk gates cgo-only imports behind it.
   build:
     name: Build
     runs-on: ubuntu-24.04
@@ -54,4 +55,4 @@ jobs:
           go-version-file: go.mod
 
       - name: Build
-        run: GOOS=windows go build ./...
+        run: GOOS=windows go build -tags no_cgo ./...

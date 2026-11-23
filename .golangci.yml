@@ -1,5 +1,11 @@
 version: "2"
 
+# Cross-compiling to Windows disables cgo; rdk gates its cgo-only imports
+# (e.g. the malgo-backed microphone driver) behind this tag.
+run:
+  build-tags:
+    - no_cgo
+
 # The default linter set (errcheck, govet, ineffassign, staticcheck, unused),
 # plus gofmt so formatting drift fails CI.
 formatters:
